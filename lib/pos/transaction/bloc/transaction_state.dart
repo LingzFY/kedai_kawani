@@ -9,7 +9,8 @@ enum TransactionStatus {
   remove,
   clear,
   hold,
-  pay
+  paid,
+  failed,
 }
 
 extension TransactionStatusX on TransactionStatus {
@@ -21,7 +22,8 @@ extension TransactionStatusX on TransactionStatus {
   bool get isRemoved => this == TransactionStatus.remove;
   bool get isCleared => this == TransactionStatus.clear;
   bool get isHeld => this == TransactionStatus.hold;
-  bool get isPayed => this == TransactionStatus.pay;
+  bool get isPaid => this == TransactionStatus.paid;
+  bool get isFailed => this == TransactionStatus.failed;
 }
 
 class TransactionState extends Equatable {
@@ -31,15 +33,31 @@ class TransactionState extends Equatable {
     String? note,
     double? totalPayment,
     double? dineOption,
+    double? paymentMethodId,
+    String? paymentMethodName,
+    String? paymentRefference,
+    TransactionFileModel? transactionFileModel,
+    PaymentMethodListModel? paymentMethods,
   })  : transactionOrderModel = transactionOrderModel ?? OrderModel.empty,
         note = note ?? '',
         dineOption = dineOption ?? 0,
-        totalPayment = totalPayment ?? 0;
+        totalPayment = totalPayment ?? 0,
+        paymentMethodId = paymentMethodId ?? 0,
+        paymentRefference = paymentRefference ?? '',
+        paymentMethodName = paymentMethodName ?? '',
+        transactionFileModel =
+            transactionFileModel ?? TransactionFileModel.empty,
+        paymentMethods = paymentMethods ?? PaymentMethodListModel.empty;
 
   final OrderModel transactionOrderModel;
   final String note;
   final double totalPayment;
   final double dineOption;
+  final double paymentMethodId;
+  final String paymentRefference;
+  final String paymentMethodName;
+  final PaymentMethodListModel paymentMethods;
+  final TransactionFileModel transactionFileModel;
   final TransactionStatus status;
 
   @override
@@ -49,6 +67,10 @@ class TransactionState extends Equatable {
         totalPayment,
         note,
         dineOption,
+        paymentMethodId,
+        paymentRefference,
+        paymentMethods,
+        paymentMethodName,
       ];
 
   TransactionState copyWith({
@@ -56,6 +78,11 @@ class TransactionState extends Equatable {
     double? totalPayment,
     String? note,
     double? dineOption,
+    double? paymentMethodId,
+    String? paymentRefference,
+    String? paymentMethodName,
+    TransactionFileModel? transactionFileModel,
+    PaymentMethodListModel? paymentMethods,
     TransactionStatus? status,
   }) {
     return TransactionState(
@@ -65,6 +92,11 @@ class TransactionState extends Equatable {
       note: note ?? this.note,
       totalPayment: totalPayment ?? this.totalPayment,
       dineOption: dineOption ?? this.dineOption,
+      paymentMethodId: paymentMethodId ?? this.paymentMethodId,
+      paymentRefference: paymentRefference ?? this.paymentRefference,
+      paymentMethodName: paymentMethodName ?? this.paymentMethodName,
+      paymentMethods: paymentMethods ?? this.paymentMethods,
+      transactionFileModel: transactionFileModel ?? this.transactionFileModel,
     );
   }
 }

@@ -2,17 +2,17 @@ import 'dart:convert';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
 class TransactionFileModel {
-  final String? Filename;
-  final String? MimeType;
-  final String? Base64;
+  String? Filename;
+  String? MimeType;
+  String? Base64;
 
-  const TransactionFileModel({
+  TransactionFileModel({
     this.Filename,
     this.MimeType,
     this.Base64,
   });
 
-  static const empty = TransactionFileModel(
+  static final empty = TransactionFileModel(
     Filename: '',
     MimeType: '',
     Base64: '',
@@ -36,5 +36,6 @@ class TransactionFileModel {
 
   String toJson() => json.encode(toMap());
 
-  factory TransactionFileModel.fromJson(String source) => TransactionFileModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory TransactionFileModel.fromJson(String source) =>
+      TransactionFileModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

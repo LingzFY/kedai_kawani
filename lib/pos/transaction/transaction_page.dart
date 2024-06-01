@@ -47,10 +47,10 @@ class TransactionPage extends StatelessWidget {
                 content: Text('Product list have been held'),
               ),
             );
-          } else if (state.status.isPayed) {
+          } else if (state.status.isFailed) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
-                content: Text('Product list have been paid'),
+                content: Text('Something was Wrong'),
               ),
             );
           }

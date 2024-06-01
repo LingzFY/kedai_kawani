@@ -106,7 +106,7 @@ class ListItemWidget extends StatelessWidget {
                   child: TextField(
                     decoration: const InputDecoration(
                       border: InputBorder.none,
-                      hintText: 'Order Note',
+                      hintText: 'Item Note',
                     ),
                     onChanged: (value) {
                       context.read<TransactionBloc>().add(

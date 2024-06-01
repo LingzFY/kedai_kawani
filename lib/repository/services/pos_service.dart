@@ -1,9 +1,14 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:pos_kawani/repository/models/category_list_model.dart';
 import 'package:pos_kawani/repository/models/order_list_model.dart';
 import 'package:pos_kawani/repository/models/order_model.dart';
+import 'package:pos_kawani/repository/models/payment_method_list_model.dart';
+import 'package:pos_kawani/repository/models/payment_method_model.dart';
 import 'package:pos_kawani/repository/models/product_list_model.dart';
 import 'package:pos_kawani/repository/models/result_error.dart';
 import 'package:pos_kawani/repository/models/transaction_id_model.dart';
@@ -65,7 +70,8 @@ class PosService {
     );
     if (response.statusCode == 200) {
       if (response.body.isNotEmpty) {
-        TransactionIdModel transactionId = TransactionIdModel.fromJson(response.body);
+        TransactionIdModel transactionId =
+            TransactionIdModel.fromJson(response.body);
         OrderModel transactionOrder = OrderModel.empty;
 
         transactionOrder.Id = transactionId.Id;
@@ -148,21 +154,55 @@ class PosService {
     }
   }
 
-  // Future<> postHoldOrder(TransactionOrderModel transactionOrderModel) async {
-  //   final response = await _httpClient.post(
-  //     getUrl(url: 'api/v1/order/hold', extraParameters: {
-  //       'status': status,
-  //     }),
-  //     headers: getHeaders(),
-  //   );
-  //   if (response.statusCode == 200) {
-  //     if (response.body.isNotEmpty) {
-  //       return OrderListModel.fromJson(response.body);
-  //     } else {
-  //       throw ErrorEmptyResponse();
-  //     }
-  //   } else {
-  //     throw ErrorGettingResponse('Error getting Products');
-  //   }
-  // }
+  Future<int> postHoldOrder(TransactionOrderModel transactionOrderModel) async {
+    final response = await _httpClient.post(
+      getUrl(url: 'api/v1/order/hold'),
+      headers: getHeaders(),
+      body: transactionOrderModel.toJson(),
+    );
+    if (response.statusCode == 200) {
+      if (response.body.isNotEmpty) {
+        return response.statusCode;
+      } else {
+        throw ErrorEmptyResponse();
+      }
+    } else {
+      throw ErrorGettingResponse('Error hold order');
+    }
+  }
+
+  
+  Future<PaymentMethodListModel> getPaymentMethods() async {
+    final response = await _httpClient.get(
+      getUrl(url: 'api/v1/PaymentMethod/get'),
+      headers: getHeaders(),
+    );
+    if (response.statusCode == 200) {
+      if (response.body.isNotEmpty) {
+        return PaymentMethodListModel.fromJson(response.body);
+      } else {
+        throw ErrorEmptyResponse();
+      }
+    } else {
+      throw ErrorGettingResponse('Error getting Products');
+    }
+  }
+
+  Future<int> postPaymentOrder(
+      TransactionOrderModel transactionOrderModel) async {
+    final response = await _httpClient.post(
+      getUrl(url: 'api/v1/order/payment'),
+      headers: getHeaders(),
+      body: transactionOrderModel.toJson(),
+    );
+    if (response.statusCode == 200) {
+      if (response.body.isNotEmpty) {
+        return response.statusCode;
+      } else {
+        throw ErrorEmptyResponse();
+      }
+    } else {
+      throw ErrorGettingResponse('Error pay order');
+    }
+  }
 }

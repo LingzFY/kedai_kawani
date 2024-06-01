@@ -18,7 +18,7 @@ class OrderModel {
   String? CreateDate;
   String? UpdateBy;
   String? UpdateDate;
-  final List<TransactionItemModel> Items;
+  List<TransactionItemModel> Items;
 
   OrderModel({
     this.Id,

@@ -76,3 +76,71 @@ class ChangeDineOption extends TransactionEvent {
   @override
   List<Object?> get props => [dineOption];
 }
+
+class PostHoldOrder extends TransactionEvent {
+  PostHoldOrder({
+    required this.transactionOrderModel,
+  });
+  final TransactionOrderModel transactionOrderModel;
+
+  @override
+  List<Object?> get props => [transactionOrderModel];
+}
+
+class GetPaymentMethods extends TransactionEvent {}
+
+class SetTransaction extends TransactionEvent {}
+
+class SetTotalPayment extends TransactionEvent {
+  SetTotalPayment({
+    required this.totalPayment,
+  });
+  final double totalPayment;
+
+  @override
+  List<Object?> get props => [totalPayment];
+}
+
+class SetPaymentMethod extends TransactionEvent {
+  SetPaymentMethod({
+    required this.paymentMethodId,
+    required this.paymentRefference,
+  });
+  final double paymentMethodId;
+  final String paymentRefference;
+
+  @override
+  List<Object?> get props => [paymentMethodId, paymentRefference];
+}
+
+class SetPaymentFile extends TransactionEvent {
+  SetPaymentFile({
+    required this.transactionFileModel,
+  });
+  final TransactionFileModel transactionFileModel;
+
+  @override
+  List<Object?> get props => [transactionFileModel];
+}
+
+class SelectPaymentMethod extends TransactionEvent {
+  SelectPaymentMethod({
+    required this.paymentMethodId,
+    required this.paymentRefference,
+  });
+  final double paymentMethodId;
+  final String paymentRefference;
+
+  @override
+  List<Object?> get props => [paymentMethodId, paymentRefference];
+}
+
+class PaymentOrder extends TransactionEvent {
+  PaymentOrder({
+    required this.transactionOrderModel,
+  });
+  final TransactionOrderModel transactionOrderModel;
+
+  @override
+  List<Object?> get props => [transactionOrderModel];
+}
